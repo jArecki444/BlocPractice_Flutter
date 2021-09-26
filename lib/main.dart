@@ -103,7 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterCubit, CounterState>(
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Incremented!'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                } else if (state.wasIncremented == false) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Decremented!'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                }
+              },
               builder: (context, state) {
                 return Text(
                   state.counterValue.toString(),
